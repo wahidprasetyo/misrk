@@ -65,6 +65,7 @@
             padding: 10px 24px;
             font-weight: 500;
             transition: transform 0.2s;
+            display: inline-block;
         }
         
         .btn-green-school:hover {
@@ -334,10 +335,107 @@
             color: var(--text-dark);
         }
 
-        /* Responsivitas untuk layar HP */
+        /* --- PENYESUAIAN RESPONSIVITAS UNTUK LAYAR HP (MOBILE) --- */
         @media (max-width: 768px) {
+            /* Navbar */
+            .navbar {
+                padding: 16px 20px;
+            }
+            .navbar-nav {
+                margin-top: 16px;
+                text-align: center;
+                background: #fff;
+                padding: 16px;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            }
+            .nav-item.ms-4 {
+                margin-left: 0 !important;
+                margin-top: 10px;
+            }
+
+            /* Hero Section */
+            .hero-section {
+                padding: 40px 20px 60px;
+                text-align: center;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+                max-width: 100%;
+                letter-spacing: -1px;
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+            .hero-section .d-flex.gap-3 {
+                flex-direction: column;
+                justify-content: center;
+            }
+            .hero-section .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            /* Stats Bar */
+            .hero-stats {
+                gap: 30px;
+                margin-top: 40px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            /* Hero Image & Cards */
+            .hero-image-wrapper {
+                margin-top: 40px;
+            }
+            .hero-image-wrapper img {
+                height: 400px;
+            }
+            .glass-card {
+                padding: 10px 16px;
+            }
+            .glass-card h6 {
+                font-size: 0.9rem;
+            }
+            .glass-card-1 { 
+                top: 20px; 
+                right: 10px; 
+            }
+            .glass-card-2 { 
+                bottom: 20px; 
+                right: 10px; 
+            }
+
+            /* Sticky / Scroll Section */
+            .sticky-container {
+                padding: 60px 20px;
+                margin: 0 10px;
+            }
+            .sticky-left {
+                position: relative; /* Mematikan sticky pada layar kecil agar tidak bertumpuk */
+                top: 0;
+                margin-bottom: 40px;
+                text-align: center;
+            }
+            .sticky-title {
+                font-size: 2rem;
+            }
+            .scroll-item {
+                height: auto;
+                padding-bottom: 40px;
+            }
+            .scroll-visual {
+                padding: 20px;
+            }
+            .scroll-desc {
+                max-width: 95% !important; /* Agar kotak deskripsi menyesuaikan lebar HP */
+            }
+
+            /* Footer */
             .custom-footer {
                 padding: 40px 20px 20px;
+                margin: 0 10px 40px;
             }
             .footer-col {
                 margin-top: 40px;
@@ -346,6 +444,14 @@
                 flex-direction: column;
                 text-align: center;
                 justify-content: center;
+            }
+            .footer-socials {
+                justify-content: center;
+            }
+            .footer-brand, .footer-desc {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
             }
         }
 
@@ -359,6 +465,12 @@
                 <img src="https://i.ibb.co.com/WN59bgvJ/logo-sekolah.png" alt="Logo" style="width: 36px; margin-right: 12px;">
                 MIS ROUDLOTUL KHUFFADZ
             </a>
+            
+            <!-- Ditambahkan: Tombol Toggle Hamburger untuk menu mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item"><a class="nav-link" href="#tentang">Tentang</a></li>
@@ -553,6 +665,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Ditambahkan: Script Bootstrap Bundle agar Navigasi Hamburger dapat berfungsi -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Masukkan URL Aplikasi Web (Backend) Anda di sini
