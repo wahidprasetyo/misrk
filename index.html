@@ -457,6 +457,17 @@
             .footer-socials { justify-content: center; }
             .footer-brand, .footer-desc { text-align: center; margin-left: auto; margin-right: auto; }
         }
+
+        /* --- ADDED ANIMATION STYLE --- */
+        .about-section .custom-about-card {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .about-section.in-view .custom-about-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -541,16 +552,20 @@
             <div class="row align-items-center custom-about-card">
                 
                 <div class="col-lg-4 text-center text-lg-start mb-5 mb-lg-0">
-                    <div class="kamad-image-wrapper mx-auto mx-lg-0">
-                        <!-- Menggunakan Link Gambar Kepala Madrasah Anda -->
-                        <img src="https://i.ibb.co.com/4wm7HHXw/kamad.png" alt="Ryan Trisnawati, S.Pd - Kepala Madrasah">
-                        <div class="kamad-badge">
-                            <i class="fas fa-quote-left"></i>
+                    <!-- FIXED POSITION: WRAPPING IMAGE AND NAME INSIDE A NEW FLex-COLUMN DIV -->
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="kamad-image-wrapper mx-auto mx-lg-0 mb-4">
+                            <!-- Menggunakan Link Gambar Kepala Madrasah Anda -->
+                            <img src="https://i.ibb.co.com/4wm7HHXw/kamad.png" alt="Ryan Trisnawati, S.Pd - Kepala Madrasah">
+                            <div class="kamad-badge">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-5 mt-lg-4 text-center">
-                        <h4 class="fw-bold mb-1">Ryan Trisnawati, S.Pd</h4>
-                        <p class="text-success fw-medium mb-0">Kepala MIS Roudlotul Khuffadz</p>
+                        <!-- Removed mt-5 and added text-center -->
+                        <div class="text-center">
+                            <h4 class="fw-bold mb-1">Ryan Trisnawati, S.Pd</h4>
+                            <p class="text-success fw-medium mb-0">Kepala MIS Roudlotul Khuffadz</p>
+                        </div>
                     </div>
                 </div>
 
@@ -570,7 +585,7 @@
                                     </div>
                                     <h5 class="fw-bold mb-3">Visi Kami</h5>
                                     <p class="text-muted fs-6 mb-0" style="line-height: 1.6;">
-                                        Terwujudnya madrasah yang unggul dalam prestasi, tangguh berkarakter Islami, dan berwawasan lingkungan menuju generasi yang *Rahmatan Lil 'Alamin*.
+                                        Terwujudnya madrasah yang unggul dalam prestasi, tangguh berkarakter Islami, dan berwawasan lingkungan menuju generasi yang Rahmatan Lil 'Alamin.
                                     </p>
                                 </div>
                             </div>
@@ -816,6 +831,25 @@
         document.addEventListener("DOMContentLoaded", function() {
             observeScrollItems();
             loadBerita();
+
+            /* --- ADDED SCRIPT FOR TENTANG KAMI ANIMATION --- */
+            const aboutSection = document.getElementById('tentang');
+            const aboutObserverOptions = {
+                root: null,
+                rootMargin: '-15% 0px',
+                threshold: 0.2
+            };
+            const aboutObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        aboutSection.classList.add('in-view');
+                    } else {
+                        // Optional: remove class when scrolling out of view
+                        // aboutSection.classList.remove('in-view');
+                    }
+                });
+            }, aboutObserverOptions);
+            aboutObserver.observe(aboutSection);
         });
     </script>
 </body>
