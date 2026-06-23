@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://i.ibb.co.com/WN59bgvJ/logo-sekolah.png">
     <title>Panduan Guru - MIS Roudlotul Khuffadz</title>
     
-    <!-- CSS & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -18,8 +18,8 @@
             --bg-color: #F9F9F6;
             --text-dark: #1A1A1A;
             --text-muted: #666666;
-            --primary: #17a24b;
-            --primary-light: rgba(23, 162, 75, 0.08);
+            --green-school: #17a24b;
+            --green-light: rgba(23, 162, 75, 0.08);
             --accent-orange: #E25E3E;
         }
 
@@ -34,16 +34,13 @@
         }
 
         /* =========================================
-           2. NAVBAR PREMIUM
+           2. NAVBAR PREMIUM (Sama dengan Index & Materi)
            ========================================= */
         .navbar {
             padding: 24px 40px;
             background: transparent;
-            position: absolute;
-            width: 100%;
             z-index: 100;
         }
-        
         .navbar-brand {
             font-weight: 700;
             font-size: 1.1rem;
@@ -51,34 +48,63 @@
             color: var(--text-dark) !important;
         }
         
-        .btn-nav-outline {
-            border: 1px solid var(--text-dark);
+        .nav-link {
             color: var(--text-dark) !important;
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin: 0 16px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link:hover {
+            opacity: 1;
+        }
+
+        .nav-link:not(.btn-green-school):not(.text-success)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--green-school);
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-link:not(.btn-green-school):not(.text-success):hover::after {
+            width: 100%;
+        }
+
+        .btn-green-school {
+            background-color: var(--green-school) !important;
+            color: #fff !important;
+            border-radius: 50px;
+            padding: 10px 24px;
+            font-weight: 500;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        
+        .btn-green-school:hover {
+            background-color: #148f3f !important;
+            transform: scale(1.05);
+        }
+
+        .btn-logout {
             border-radius: 50px;
             padding: 10px 24px;
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-        }
-        
-        .btn-nav-outline:hover {
-            background-color: var(--text-dark);
-            color: #fff !important;
-        }
-
-        .btn-logout {
             background-color: #fff;
-            color: var(--text-dark);
-            border: 1px solid rgba(0,0,0,0.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            color: #dc3545 !important;
+            border: 1px solid #dc3545;
         }
         .btn-logout:hover {
-            background-color: #ffe6e6;
-            color: #dc3545;
-            border-color: #ffcccc;
+            background-color: #dc3545;
+            color: #fff !important;
         }
 
         /* =========================================
@@ -88,8 +114,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 80px 20px 20px;
+            flex-grow: 1;
+            padding: 40px 20px;
             background: radial-gradient(circle at top, rgba(23, 162, 75, 0.05), transparent 70%);
         }
 
@@ -107,8 +133,8 @@
         .login-icon {
             width: 80px;
             height: 80px;
-            background-color: var(--primary-light);
-            color: var(--primary);
+            background-color: var(--green-light);
+            color: var(--green-school);
             border-radius: 24px;
             display: flex;
             align-items: center;
@@ -130,7 +156,7 @@
 
         .form-control-modern:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--green-school);
             box-shadow: 0 0 0 4px rgba(23, 162, 75, 0.1);
             background-color: #fff;
         }
@@ -139,7 +165,7 @@
            4. HEADER MATERI
            ========================================= */
         .header-page {
-            padding: 120px 20px 60px;
+            padding: 60px 20px 60px;
             text-align: center;
             background: radial-gradient(circle at top, rgba(23, 162, 75, 0.06), transparent 70%);
         }
@@ -164,16 +190,8 @@
         /* =========================================
            5. SEARCH BAR (LUAS)
            ========================================= */
-        .search-container {
-            margin-bottom: 80px;
-        }
-
-        .search-wrapper {
-            position: relative;
-            z-index: 10;
-            max-width: 680px;
-            margin: 0 auto;
-        }
+        .search-container { margin-bottom: 80px; }
+        .search-wrapper { position: relative; z-index: 10; max-width: 680px; margin: 0 auto; }
         
         .search-input-modern {
             width: 100%;
@@ -223,8 +241,8 @@
         .icon-box {
             width: 56px;
             height: 56px;
-            background-color: var(--primary-light);
-            color: var(--primary);
+            background-color: var(--green-light);
+            color: var(--green-school);
             border-radius: 18px;
             display: flex;
             align-items: center;
@@ -251,8 +269,8 @@
         }
         
         .btn-action:hover {
-            background-color: var(--primary);
-            border-color: var(--primary);
+            background-color: var(--green-school);
+            border-color: var(--green-school);
         }
         
         .btn-action-outline {
@@ -294,38 +312,78 @@
         }
 
         /* =========================================
-           8. FOOTER
+           8. FOOTER CUSTOM
            ========================================= */
-        footer {
-            padding: 60px 20px;
-            background: var(--bg-color);
-            text-align: center;
-            border-top: 1px solid rgba(0,0,0,0.03);
-            margin-top: auto;
+        .custom-footer {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 60px 40px 30px;
+            margin: auto 20px 40px; /* margin-top auto mendorong footer ke bawah */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-brand { font-weight: 700; font-size: 1.1rem; color: var(--text-dark); text-decoration: none; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .footer-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 30px; max-width: 90%; }
+        .footer-socials { display: flex; gap: 20px; }
+        .footer-socials a { color: var(--text-dark); font-size: 1.2rem; text-decoration: none; transition: opacity 0.3s; }
+        .footer-socials a:hover { opacity: 0.6; }
+
+        .footer-col-title { font-weight: 700; color: var(--text-dark); margin-bottom: 24px; font-size: 1rem; }
+        .footer-links { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--text-dark); }
+
+        .footer-bottom { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-copyright { color: var(--text-muted); font-size: 0.9rem; }
+        .footer-legal-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-legal-links a { color: var(--text-muted); text-decoration: underline; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-legal-links a:hover { color: var(--text-dark); }
+
+        /* RESPONSIVITAS */
+        @media (max-width: 768px) {
+            .navbar { padding: 16px 20px; }
+            .navbar-nav { margin-top: 16px; text-align: center; background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+            .nav-item.ms-lg-4, .nav-item.ms-lg-2 { margin-left: 0 !important; margin-top: 10px; }
+            .custom-footer { padding: 40px 20px 20px; margin: auto 10px 40px; }
+            .footer-col { margin-top: 40px; }
+            .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+            .footer-socials { justify-content: center; }
+            .footer-brand, .footer-desc { text-align: center; margin-left: auto; margin-right: auto; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR PREMIUM -->
     <nav class="navbar navbar-expand-lg">
-        <div class="container-xl">
+        <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
                 <img src="https://i.ibb.co.com/WN59bgvJ/logo-sekolah.png" alt="Logo" style="width: 36px; margin-right: 12px;">
                 MIS ROUDLOTUL KHUFFADZ
             </a>
-            <div class="ms-auto d-flex gap-2">
-                <button id="btnLogout" class="btn-nav-outline btn-logout d-none">
-                    <i class="fas fa-sign-out-alt me-2"></i> Keluar
-                </button>
-                <a href="index.html" class="btn-nav-outline">
-                    <i class="fas fa-arrow-left me-2"></i> Kembali
-                </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html#tentang">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="materi.html">Materi</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-success" href="panduanguru.html">Guru</a></li>
+                    <li class="nav-item ms-lg-4"><a class="nav-link btn-green-school" href="sipintarrk.html">SIPINTAR-RK</a></li>
+                    
+                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                        <button id="btnLogout" class="nav-link btn-logout d-none shadow-sm">
+                            <i class="fas fa-sign-out-alt me-1"></i> Keluar
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
-    <!-- SECTION LOGIN (Dibuat Mewah & Berpusat) -->
     <div id="loginSection" class="login-wrapper">
         <div class="login-card">
             <div class="login-icon">
@@ -355,10 +413,8 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT (Ditampilkan Setelah Login) -->
-    <div id="mainContent" class="d-none d-flex flex-column" style="min-height: 100vh;">
+    <div id="mainContent" class="d-none flex-column" style="min-height: 100vh;">
         
-        <!-- HEADER -->
         <header class="header-page">
             <div class="container">
                 <h1 class="header-title">Panduan Guru</h1>
@@ -366,10 +422,8 @@
             </div>
         </header>
 
-        <!-- KONTEN -->
         <main class="container-xl flex-grow-1 mb-5">
             
-            <!-- Kolom Pencarian -->
             <div class="row search-container">
                 <div class="col-12 px-3">
                     <div class="search-wrapper">
@@ -379,10 +433,8 @@
                 </div>
             </div>
 
-            <!-- Area Grid List Materi (Luas & Airy) -->
             <div class="row g-4 lg-g-5" id="materiList">
                 
-                <!-- Skeleton Loader Grid -->
                 <div id="loading" class="row g-4 m-0 p-0 w-100">
                     <div class="col-md-6 col-lg-4">
                         <div class="card-modern">
@@ -421,7 +473,6 @@
                 </div>
             </div>
 
-            <!-- Pesan Jika Tidak Ada Hasil -->
             <div id="noResults" class="text-center py-5 d-none">
                 <i class="fas fa-folder-open text-muted mb-4" style="font-size: 4rem; opacity: 0.2;"></i>
                 <h4 class="fw-bold text-dark mb-2">Panduan Tidak Ditemukan</h4>
@@ -430,17 +481,66 @@
             
         </main>
 
-        <!-- FOOTER EKSKLUSIF MAIN CONTENT -->
-        <footer>
-            <div class="container-xl">
-                <p class="text-muted m-0 fw-medium">© 2026 MIS Roudlotul Khuffadz. Semua Hak Dilindungi.</p>
-                <small class="text-muted mt-2 d-block">Developed by <span style="color: var(--primary); font-weight: 700;">W.B.P</span></small>
+        <footer class="custom-footer">
+            <div class="row">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <a href="index.html" class="footer-brand">
+                        <img src="https://i.ibb.co.com/WN59bgvJ/logo-sekolah.png" alt="Logo" style="width: 24px;">
+                        MIS ROUDLOTUL KHUFFADZ
+                    </a>
+                    <p class="footer-desc">
+                        Memberdayakan siswa untuk mengubah potensi mentah menjadi prestasi yang nyata — menjadikan pendidikan lebih mudah dipahami, dibagikan, dan diamalkan.
+                    </p>
+                    <div class="footer-socials">
+                        <a href="https://www.facebook.com/mi.roudlotulkhuffadz.50?locale=id_ID"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/mi.roudlotulkhuffadz/"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/6282248266027?text=Assalamualaikum,%20saya%20ingin%20bertanya%20tentang%20informasi%20sekolah."><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-6 col-md-4 footer-col">
+                            <h5 class="footer-col-title">Program</h5>
+                            <ul class="footer-links">
+                                <li><a href="sipintarrk.html">Fitur Akademik</a></li>
+                                <li><a href="pendaftaran.html">Biaya & Pendaftaran</a></li>
+                                <li><a href="index.html#ekskul">Ekstrakurikuler</a></li>
+                                <li><a href="index.html#berita">Pembaruan Info</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-md-4 footer-col">
+                            <h5 class="footer-col-title">Sumber Daya</h5>
+                            <ul class="footer-links">
+                                <li><a href="galeri.html">Dokumentasi</a></li>
+                                <li><a href="#">Pusat Bantuan</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-md-4 footer-col mt-4 mt-md-0">
+                            <h5 class="footer-col-title">Sekolah</h5>
+                            <ul class="footer-links">
+                                <li><a href="index.html#tentang">Tentang Kami</a></li>
+                                <li><a href="https://maps.app.goo.gl/erHtXGyUEJXTAij87">Lokasi</a></li>
+                                <li><a href="https://wa.me/6282248266027?text=Assalamualaikum,%20saya%20ingin%20bertanya%20tentang%20prosedur%20bermitra.">Kemitraan</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    © 2026 MIS Roudlotul Khuffadz | Developed by W.B.P | All rights reserved
+                </div>
+                <div class="footer-legal-links">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="syarat.html">Terms of Service</a>
+                    <a href="cookies.html">Cookies Settings</a>
+                </div>
             </div>
         </footer>
-    </div>
 
-    <!-- SCRIPT -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
         // URL SCRIPT GOOGLE APPS SCRIPT
@@ -507,12 +607,10 @@
         // Transisi ke Halaman Materi
         function tampilkanMateri() {
             loginSection.classList.add('d-none');
+            // Menampilkan mainContent dengan flex agar footer tetap di bawah
             mainContent.classList.remove('d-none');
+            mainContent.classList.add('d-flex');
             btnLogout.classList.remove('d-none');
-            
-            // Fix agar navbar tidak tertumpuk gradient login
-            document.querySelector('.navbar').style.position = 'relative';
-            document.querySelector('.navbar').style.padding = '32px 40px';
             
             muatDataMateri(); 
         }
@@ -524,7 +622,7 @@
             const materiList = document.getElementById('materiList');
             const loading = document.getElementById('loading');
 
-            const MATERI_CACHE_KEY = 'rk_panduan_cache'; // Menggunakan key beda agar tidak konflik dgn siswa
+            const MATERI_CACHE_KEY = 'rk_panduan_cache'; 
             const MATERI_TIME_KEY = 'rk_panduan_time';
             const CACHE_EXPIRY = 15 * 1000; 
             const now = new Date().getTime();
@@ -566,7 +664,6 @@
                 <div class="col-md-6 col-lg-4 materi-item">
                     <div class="card-modern">
                         
-                        <!-- Bagian Atas: Ikon & Badge Kategori -->
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div class="icon-box">
                                 <i class="fas fa-file-pdf"></i>
@@ -574,13 +671,11 @@
                             <span class="badge badge-custom rounded-pill">${item.kategori}</span>
                         </div>
 
-                        <!-- Bagian Tengah: Judul & Deskripsi -->
                         <div class="flex-grow-1 mb-4">
                             <h5 class="fw-bold text-dark mb-3" style="font-size: 1.35rem; line-height: 1.35; letter-spacing: -0.3px;">${item.judul}</h5>
                             <p class="text-muted m-0" style="font-size: 0.98rem; line-height: 1.6;">${item.deskripsi}</p>
                         </div>
 
-                        <!-- Bagian Bawah: Tombol -->
                         <div class="d-flex gap-3 mt-auto pt-2">
                             <a href="${item.linkBaca}" target="_blank" class="btn-action-outline w-100">
                                 <i class="fas fa-eye me-2"></i> Baca
