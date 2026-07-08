@@ -22,6 +22,9 @@
             background-color: var(--bg-color);
             color: var(--text-dark);
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- NAVBAR PREMIUM (Menyamai Landing Page) --- */
@@ -194,13 +197,48 @@
             transform: scale(1.05);
             background-color: var(--green-school);
         }
+        
+        .main-content {
+            flex: 1;
+        }
 
-        /* --- FOOTER --- */
-        footer {
-            padding: 60px 40px;
-            background: var(--bg-color);
-            text-align: center;
-            margin-top: 60px;
+        /* --- FOOTER CUSTOM --- */
+        .custom-footer {
+            background-color: #ffffff;
+            border-radius: 24px;
+            padding: 60px 40px 30px;
+            margin: 60px 20px 40px; /* Margin top ditambahkan untuk jarak dengan konten pendaftaran */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .footer-brand { font-weight: 700; font-size: 1.1rem; color: var(--text-dark); text-decoration: none; display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .footer-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 30px; max-width: 90%; }
+        .footer-socials { display: flex; gap: 20px; }
+        .footer-socials a { color: var(--text-dark); font-size: 1.2rem; text-decoration: none; transition: opacity 0.3s; }
+        .footer-socials a:hover { opacity: 0.6; }
+        .footer-col-title { font-weight: 700; color: var(--text-dark); margin-bottom: 24px; font-size: 1rem; }
+        .footer-links { list-style: none; padding: 0; margin: 0; }
+        .footer-links li { margin-bottom: 14px; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--text-dark); }
+        .footer-bottom { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-copyright { color: var(--text-muted); font-size: 0.9rem; }
+        .footer-legal-links { display: flex; gap: 24px; flex-wrap: wrap; }
+        .footer-legal-links a { color: var(--text-muted); text-decoration: underline; font-size: 0.9rem; transition: color 0.3s; }
+        .footer-legal-links a:hover { color: var(--text-dark); }
+
+        /* --- RESPONSIVITAS --- */
+        @media (max-width: 768px) {
+            .navbar { padding: 16px 20px; }
+            .header-title { font-size: 2.5rem; }
+            
+            /* Responsive Footer */
+            .custom-footer { padding: 40px 20px 20px; margin: 40px 10px 40px; }
+            .footer-col { margin-top: 40px; }
+            .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+            .footer-socials { justify-content: center; }
+            .footer-brand, .footer-desc { text-align: center; margin-left: auto; margin-right: auto; }
         }
     </style>
 </head>
@@ -220,91 +258,144 @@
         </div>
     </nav>
 
-    <header class="header-ppdb">
-        <div class="container">
-            <h1 class="header-title">Pendaftaran Peserta Didik Baru</h1>
-            <p class="header-subtitle">Bergabunglah bersama kami untuk Tahun Ajaran 2026/2027. Persiapkan masa depan buah hati dengan pendidikan karakter dan prestasi terbaik.</p>
-        </div>
-    </header>
+    <div class="main-content">
+        <header class="header-ppdb">
+            <div class="container">
+                <h1 class="header-title">Pendaftaran Peserta Didik Baru</h1>
+                <p class="header-subtitle">Bergabunglah bersama kami untuk Tahun Ajaran 2026/2027. Persiapkan masa depan buah hati dengan pendidikan karakter dan prestasi terbaik.</p>
+            </div>
+        </header>
 
-    <div class="container mb-5" style="margin-top: -20px;">
-        <div class="row g-5">
-            
-            <div class="col-lg-6">
-                <div class="card-modern">
-                    <h3 class="card-title-custom">
-                        <div class="icon-box"><i class="fas fa-file-alt"></i></div>
-                        Syarat Mendaftar
-                    </h3>
-                    <ul class="list-syarat">
-                        <li><i class="fas fa-check-circle"></i> Mengisi Formulir Pendaftaran Online/Offline.</li>
-                        <li><i class="fas fa-check-circle"></i> Berusia minimal 6 tahun.</li>
-                        <li><i class="fas fa-check-circle"></i> Fotokopi Ijasah RA/TK/PAUD (2 Lembar).</li>
-                        <li><i class="fas fa-check-circle"></i> Fotokopi Akta Kelahiran (2 Lembar).</li>
-                        <li><i class="fas fa-check-circle"></i> Fotokopi Kartu Keluarga / KK (2 Lembar).</li>
-                        <li><i class="fas fa-check-circle"></i> Fotokopi KTP Orang Tua / Wali (2 Lembar).</li>
-                        <li><i class="fas fa-check-circle"></i> Pas Foto terbaru ukuran 3x4 (2 Lembar, Latar Merah).</li>
-                        <li><i class="fas fa-check-circle"></i> Fotokopi Kartu KIP/PKH/KKS (Jika ada).</li>
-                        <li><i class="fas fa-check-circle"></i> Surat Pindah dan Rapor (Bagi Siswa Pindahan).</li>
-                    </ul>
+        <div class="container mb-5" style="margin-top: -20px;">
+            <div class="row g-5">
+                
+                <div class="col-lg-6">
+                    <div class="card-modern">
+                        <h3 class="card-title-custom">
+                            <div class="icon-box"><i class="fas fa-file-alt"></i></div>
+                            Syarat Mendaftar
+                        </h3>
+                        <ul class="list-syarat">
+                            <li><i class="fas fa-check-circle"></i> Mengisi Formulir Pendaftaran Online/Offline.</li>
+                            <li><i class="fas fa-check-circle"></i> Berusia minimal 6 tahun.</li>
+                            <li><i class="fas fa-check-circle"></i> Fotokopi Ijasah RA/TK/PAUD (2 Lembar).</li>
+                            <li><i class="fas fa-check-circle"></i> Fotokopi Akta Kelahiran (2 Lembar).</li>
+                            <li><i class="fas fa-check-circle"></i> Fotokopi Kartu Keluarga / KK (2 Lembar).</li>
+                            <li><i class="fas fa-check-circle"></i> Fotokopi KTP Orang Tua / Wali (2 Lembar).</li>
+                            <li><i class="fas fa-check-circle"></i> Pas Foto terbaru ukuran 3x4 (2 Lembar, Latar Merah).</li>
+                            <li><i class="fas fa-check-circle"></i> Fotokopi Kartu KIP/PKH/KKS (Jika ada).</li>
+                            <li><i class="fas fa-check-circle"></i> Surat Pindah dan Rapor (Bagi Siswa Pindahan).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card-modern">
+                        <h3 class="card-title-custom">
+                            <div class="icon-box"><i class="fas fa-route"></i></div>
+                            Alur Pendaftaran
+                        </h3>
+                        
+                        <div class="step-wrapper">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>Ambil & Isi Formulir</h5>
+                                <p>Datang langsung ke MIS Roudlotul Khuffadz atau hubungi kontak panitia PPDB untuk mendapatkan formulir pendaftaran.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-wrapper">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>Lengkapi Berkas</h5>
+                                <p>Siapkan seluruh berkas administrasi dan masukkan ke dalam map. (Laki-laki: Map Merah, Perempuan: Map Hijau).</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-wrapper">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>Pengembalian Berkas</h5>
+                                <p>Kembalikan formulir yang telah diisi beserta berkas kelengkapan administrasi ke panitia di sekolah.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-wrapper">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>Pengumuman</h5>
+                                <p>Informasi status penerimaan dan jadwal selanjutnya akan diinfokan secara langsung atau melalui laman web ini.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="card-modern">
-                    <h3 class="card-title-custom">
-                        <div class="icon-box"><i class="fas fa-route"></i></div>
-                        Alur Pendaftaran
-                    </h3>
-                    
-                    <div class="step-wrapper">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h5>Ambil & Isi Formulir</h5>
-                            <p>Datang langsung ke MIS Roudlotul Khuffadz atau hubungi kontak panitia PPDB untuk mendapatkan formulir pendaftaran.</p>
-                        </div>
+            <div class="text-center mt-5 pt-4">
+                <p class="text-muted fw-medium mb-3 fs-5">Punya pertanyaan lebih lanjut terkait pendaftaran?</p>
+                <a href="https://wa.me/6282239701249?text=Assalamualaikum,%20saya%20ingin%20bertanya%20tentang%20informasi%20pendaftaran." class="btn-action">
+                    <i class="fab fa-whatsapp"></i> Hubungi Panitia PPDB
+                </a>
+            </div>
+        </div> 
+    </div>
+
+    <footer class="custom-footer">
+        <div class="row">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <a href="index.html" class="footer-brand">
+                    <img src="https://i.ibb.co.com/WN59bgvJ/logo-sekolah.png" alt="Logo" style="width: 24px;">
+                    MIS ROUDLOTUL KHUFFADZ
+                </a>
+                <p class="footer-desc">
+                    Memberdayakan siswa untuk mengubah potensi mentah menjadi prestasi yang nyata — menjadikan pendidikan lebih mudah dipahami, dibagikan, dan diamalkan.
+                </p>
+                <div class="footer-socials">
+                    <a href="https://www.facebook.com/mi.roudlotulkhuffadz.50?locale=id_ID"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/mi.roudlotulkhuffadz/"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/6282248266027?text=Assalamualaikum,%20saya%20ingin%20bertanya%20tentang%20informasi%20sekolah."><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="row">
+                    <div class="col-6 col-md-4 footer-col">
+                        <h5 class="footer-col-title">Program</h5>
+                        <ul class="footer-links">
+                            <li><a href="sipintarrk.html">Fitur Akademik</a></li>
+                            <li><a href="pendaftaran.html">Biaya & Pendaftaran</a></li>
+                            <li><a href="index.html#ekskul">Ekstrakurikuler</a></li>
+                            <li><a href="index.html#berita">Pembaruan Info</a></li>
+                        </ul>
                     </div>
-                    
-                    <div class="step-wrapper">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h5>Lengkapi Berkas</h5>
-                            <p>Siapkan seluruh berkas administrasi dan masukkan ke dalam map. (Laki-laki: Map Merah, Perempuan: Map Hijau).</p>
-                        </div>
+                    <div class="col-6 col-md-4 footer-col">
+                        <h5 class="footer-col-title">Sumber Daya</h5>
+                        <ul class="footer-links">
+                            <li><a href="galery.html">Dokumentasi</a></li>
+                            <li><a href="#">Pusat Bantuan</a></li>
+                        </ul>
                     </div>
-                    
-                    <div class="step-wrapper">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h5>Pengembalian Berkas</h5>
-                            <p>Kembalikan formulir yang telah diisi beserta berkas kelengkapan administrasi ke panitia di sekolah.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="step-wrapper">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h5>Pengumuman</h5>
-                            <p>Informasi status penerimaan dan jadwal selanjutnya akan diinfokan secara langsung atau melalui laman web ini.</p>
-                        </div>
+                    <div class="col-6 col-md-4 footer-col mt-4 mt-md-0">
+                        <h5 class="footer-col-title">Sekolah</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html#tentang">Tentang Kami</a></li>
+                            <li><a href="https://maps.app.goo.gl/erHtXGyUEJXTAij87">Lokasi</a></li>
+                            <li><a href="https://wa.me/6282248266027?text=Assalamualaikum,%20saya%20ingin%20bertanya%20tentang%20prosedur%20bermitra.">Kemitraan</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="text-center mt-5 pt-4">
-            <p class="text-muted fw-medium mb-3 fs-5">Punya pertanyaan lebih lanjut terkait pendaftaran?</p>
-            <a href="https://wa.me/6282239701249?text=Assalamualaikum,%20saya%20ingin%20bertanya%20tentang%20informasi%20pendaftaran." class="btn-action">
-                <i class="fab fa-whatsapp"></i> Hubungi Panitia PPDB
-            </a>
-        </div>
-    </div> 
-
-    <footer class="border-top">
-        <div class="container">
-            <p class="text-muted m-0 fw-medium">
-                © 2026 MIS Roudlotul Khuffadz. Semua Hak Dilindungi.
-            </p>
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                © 2026 MIS Roudlotul Khuffadz | Developed by W.B.P | All rights reserved
+            </div>
+            <div class="footer-legal-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="syarat.html">Terms of Service</a>
+                <a href="cookies.html">Cookies Settings</a>
+            </div>
         </div>
     </footer>
 
