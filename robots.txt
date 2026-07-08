@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://misroudlotulkhuffadz.vercel.app/sitemap.xml
