@@ -920,15 +920,9 @@
     function mulaiLatihan(id, nama) {
       currentKelasId = id; currentKelasNama = nama;
       document.getElementById('judulLatihan').innerText = nama;
-      switchView('viewSiswa');
-      document.getElementById('timerContainer').classList.remove('hidden');
-      document.getElementById('timerContainer').classList.add('flex');
       
-      let savedTimer = localStorage.getItem('sipintar_timer_' + currentUser.username + '_' + id);
-      durasiDetik = savedTimer ? parseInt(savedTimer) : 3600;
-      
+      // Memanggil fungsi muatSoalSiswa, nanti di dalam fungsi itu baru membuka halaman ujian
       muatSoalSiswa(id);
-      clearInterval(timerInterval); mulaiTimer();
     }
 
     function mulaiTimer() {
@@ -958,10 +952,32 @@
       localStorage.setItem(progressKey, JSON.stringify(savedProgress));
     }
 
+    // --- PERBAIKAN: Menambahkan pengiriman username & menangkap blokir dari server ---
     function muatSoalSiswa(idKelas) {
       Swal.fire({ title: 'Memuat Soal...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-      gasApi('getSoalByKelas', { idKelas: idKelas }).then(data => {
+      
+      // PERUBAHAN: Menambahkan variabel username pada pemanggilan API
+      gasApi('getSoalByKelas', { 
+        idKelas: idKelas,
+        username: currentUser.username // <- Wajib agar server mengenali siapa yang request
+      }).then(data => {
         Swal.close();
+        
+        // PERUBAHAN: Jika server mengirim error (sudah pernah mengerjakan)
+        if (data.error) {
+           Swal.fire({ icon: 'error', title: 'Akses Ditolak', text: data.message, confirmButtonColor: '#e11d48' });
+           return; // Hentikan proses, siswa tidak masuk ke halaman ujian
+        }
+
+        // Jika lolos pengecekan (belum pernah mengerjakan), barulah halaman ujian dibuka
+        switchView('viewSiswa');
+        document.getElementById('timerContainer').classList.remove('hidden');
+        document.getElementById('timerContainer').classList.add('flex');
+        
+        let savedTimer = localStorage.getItem('sipintar_timer_' + currentUser.username + '_' + idKelas);
+        durasiDetik = savedTimer ? parseInt(savedTimer) : 3600;
+        clearInterval(timerInterval); mulaiTimer();
+
         daftarSoal = data; 
         let container = document.getElementById('soalRender'); 
         let html = '';
@@ -990,7 +1006,7 @@
                     ${['A','B','C','D'].map((huruf, i) => `
                       <label class="flex items-center gap-4 p-4 border border-slate-200 rounded-xl cursor-pointer dark:border-slate-700">
                         <input type="radio" name="soal_${soal.noSoal}" value="${huruf}" onchange="simpanJawabanSementara(${soal.noSoal}, '${huruf}')" class="w-5 h-5 cursor-pointer">
-                        <span><span class="font-bold mr-2">${huruf}.</span> ${soal.opsi[i]}</span>
+                        <span><span class="font-bold mr-2">${huruf}.</span>${soal.opsi[i]}</span>
                       </label>
                     `).join('')}
                   </div>
