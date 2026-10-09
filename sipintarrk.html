@@ -427,7 +427,7 @@
           <div class="text-7xl font-black text-sekolah-600" id="skorAkhir">0</div>
         </div>
         <div>
-          <button onclick="logout()" class="bg-slate-100 text-slate-700 px-8 py-3 rounded-xl hover:bg-slate-200 transition-all font-semibold inline-flex items-center gap-2 dark:bg-slate-700 dark:text-slate-200">
+          <button onclick="switchView('viewPilihKelas'); muatDaftarMapelSiswa(); document.getElementById('examContainer').classList.remove('hidden'); document.getElementById('hasilUjian').classList.add('hidden');" class="bg-slate-100 text-slate-700 px-8 py-3 rounded-xl hover:bg-slate-200 transition-all font-semibold inline-flex items-center gap-2 dark:bg-slate-700 dark:text-slate-200">
             <i class="fa-solid fa-house"></i> Kembali ke Beranda
           </button>
         </div>
@@ -465,7 +465,6 @@
     let soalMapelAktif = [];
     let slotTerpilih = null;
     let globalDataNilai = []; 
-    let riwayatSiswaAktif = [];
 
     let durasiDetik = 3600; 
     let timerInterval;
@@ -826,7 +825,7 @@
       document.getElementById('formSoalContainer').classList.add('hidden');
       Swal.fire({ title: 'Memuat Bank Soal...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
       gasApi('getSoalByKelas', { idKelas: idKelas }).then(data => {
-        soalMapelAktif = data;
+        soalMapelAktif = Array.isArray(data) ? data : [];
         renderGrid30Slot();
         Swal.close();
       });
@@ -902,34 +901,27 @@
       const container = document.getElementById('containerListKelas');
       container.innerHTML = `<div class="col-span-full flex justify-center py-10"><i class="fa-solid fa-circle-notch fa-spin text-3xl text-sekolah-500"></i></div>`;
       
-      Promise.all([gasApi('getKelas'), gasApi('getDataNilai').catch(() => [])]).then(([kelas, nilaiList]) => {
-        riwayatSiswaAktif = (nilaiList || []).filter(n => 
-          n.username && currentUser && n.username.toString().trim().toLowerCase() === currentUser.username.toString().trim().toLowerCase()
-        );
-
-        if(kelas.length === 0) {
+      Promise.all([gasApi('getKelas'), gasApi('getDataNilai')]).then(([kelas, nilaiData]) => {
+        if(!kelas || kelas.length === 0) {
           container.innerHTML = `<div class="col-span-full text-center py-16 bg-white rounded-2xl dark:bg-slate-800"><p class="text-slate-500">Belum ada mata pelajaran aktif.</p></div>`;
           return;
         }
         let html = '';
         kelas.forEach(k => {
-          let riwayat = riwayatSiswaAktif.find(n => 
-            n.mapel && n.mapel.toString().trim().toLowerCase() === k.nama.toString().trim().toLowerCase()
+          let riwayat = (nilaiData || []).find(n => 
+            String(n.username).trim() === String(currentUser.username).trim() && 
+            String(n.mapel).trim().toLowerCase() === String(k.nama).trim().toLowerCase()
           );
-
+          
           if (riwayat) {
             html += `
-              <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 opacity-80">
-                <div class="flex items-start justify-between mb-3">
-                  <h3 class="font-bold text-lg text-slate-700 dark:text-slate-300">${k.nama}</h3>
-                  <span class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400 px-2.5 py-1 rounded-full font-bold flex items-center gap-1">
-                    <i class="fa-solid fa-check"></i> Selesai
-                  </span>
+              <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 opacity-80 dark:bg-slate-800">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100">${k.nama}</h3>
+                  <span class="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400 px-2.5 py-1 rounded-full font-bold">Selesai</span>
                 </div>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Nilai: <strong class="text-emerald-600 dark:text-emerald-400 text-sm font-bold">${riwayat.skor}</strong></p>
-                <button disabled class="bg-slate-100 dark:bg-slate-700/60 text-slate-400 dark:text-slate-500 border border-slate-200 dark:border-slate-700 py-2.5 rounded-xl font-semibold w-full cursor-not-allowed flex items-center justify-center gap-2">
-                  <i class="fa-solid fa-circle-check"></i> Sudah Dikerjakan
-                </button>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Nilai Ujian: <strong class="text-sekolah-600 dark:text-sekolah-400 font-bold">${riwayat.skor}</strong></p>
+                <button disabled class="bg-slate-200 text-slate-400 py-2.5 rounded-xl font-semibold w-full cursor-not-allowed dark:bg-slate-700 dark:text-slate-500">Sudah Dikerjakan</button>
               </div>`;
           } else {
             html += `
@@ -940,32 +932,33 @@
           }
         });
         container.innerHTML = html;
-      }).catch(err => {
-        container.innerHTML = `<div class="col-span-full text-center py-16 bg-white rounded-2xl dark:bg-slate-800"><p class="text-rose-500">Gagal memuat data mata pelajaran.</p></div>`;
       });
     }
 
     function mulaiLatihan(id, nama) {
-      if (riwayatSiswaAktif.some(n => n.mapel && n.mapel.toString().trim().toLowerCase() === nama.toString().trim().toLowerCase())) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Ujian Sudah Dikerjakan',
-          text: 'Anda hanya dapat mengerjakan ujian 1 kali untuk mata pelajaran ini!',
-          confirmButtonColor: '#16a34a'
-        });
-        return;
-      }
-      currentKelasId = id; currentKelasNama = nama;
-      document.getElementById('judulLatihan').innerText = nama;
-      switchView('viewSiswa');
-      document.getElementById('timerContainer').classList.remove('hidden');
-      document.getElementById('timerContainer').classList.add('flex');
-      
-      let savedTimer = localStorage.getItem('sipintar_timer_' + currentUser.username + '_' + id);
-      durasiDetik = savedTimer ? parseInt(savedTimer) : 3600;
-      
-      muatSoalSiswa(id);
-      clearInterval(timerInterval); mulaiTimer();
+      Swal.fire({ title: 'Memeriksa Akses Ujian...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+      gasApi('getDataNilai').then(nilaiData => {
+        let riwayat = (nilaiData || []).find(n => 
+          String(n.username).trim() === String(currentUser.username).trim() && 
+          String(n.mapel).trim().toLowerCase() === String(nama).trim().toLowerCase()
+        );
+        
+        if (riwayat) {
+          Swal.fire({ 
+            icon: 'error', 
+            title: 'Akses Ditolak', 
+            text: `Anda sudah selesai mengerjakan mata pelajaran ${nama} dengan nilai ${riwayat.skor}.`, 
+            confirmButtonColor: '#16a34a' 
+          });
+          return;
+        }
+        
+        currentKelasId = id; 
+        currentKelasNama = nama;
+        document.getElementById('judulLatihan').innerText = nama;
+        
+        muatSoalSiswa(id);
+      });
     }
 
     function mulaiTimer() {
@@ -996,9 +989,30 @@
     }
 
     function muatSoalSiswa(idKelas) {
-      Swal.fire({ title: 'Memuat Soal...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-      gasApi('getSoalByKelas', { idKelas: idKelas }).then(data => {
+      gasApi('getSoalByKelas', { idKelas: idKelas, username: currentUser.username }).then(res => {
         Swal.close();
+        
+        if (res && res.blocked) {
+          Swal.fire({ icon: 'error', title: 'Akses Ditolak', text: res.message, confirmButtonColor: '#16a34a' });
+          switchView('viewPilihKelas');
+          muatDaftarMapelSiswa();
+          return;
+        }
+
+        let data = Array.isArray(res) ? res : (res && res.soal ? res.soal : []);
+        if (data.length === 0) {
+          Swal.fire({ icon: 'warning', title: 'Soal Belum Tersedia', text: 'Mata pelajaran ini belum memiliki instrumen soal.' });
+          switchView('viewPilihKelas');
+          return;
+        }
+
+        switchView('viewSiswa');
+        document.getElementById('timerContainer').classList.remove('hidden');
+        document.getElementById('timerContainer').classList.add('flex');
+        
+        let savedTimer = localStorage.getItem('sipintar_timer_' + currentUser.username + '_' + idKelas);
+        durasiDetik = savedTimer ? parseInt(savedTimer) : 3600;
+
         daftarSoal = data; 
         let container = document.getElementById('soalRender'); 
         let html = '';
@@ -1027,7 +1041,7 @@
                     ${['A','B','C','D'].map((huruf, i) => `
                       <label class="flex items-center gap-4 p-4 border border-slate-200 rounded-xl cursor-pointer dark:border-slate-700">
                         <input type="radio" name="soal_${soal.noSoal}" value="${huruf}" onchange="simpanJawabanSementara(${soal.noSoal}, '${huruf}')" class="w-5 h-5 cursor-pointer">
-                        <span><span class="font-bold mr-2">${huruf}.</span> ${soal.opsi[i]}</span>
+                        <span><span class="font-bold mr-2">${huruf}.</span>${soal.opsi[i]}</span>
                       </label>
                     `).join('')}
                   </div>
@@ -1037,6 +1051,9 @@
         });
         container.innerHTML = html;
         if (typeof MathJax !== 'undefined') MathJax.typesetPromise();
+
+        clearInterval(timerInterval); 
+        mulaiTimer();
       });
     }
 
@@ -1071,18 +1088,12 @@
         localStorage.removeItem('sipintar_progress_' + currentUser.username + '_' + currentKelasId);
         localStorage.removeItem('sipintar_timer_' + currentUser.username + '_' + currentKelasId);
         Swal.close();
+
         if (!res.success) {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Pemberitahuan',
-            text: res.message || 'Anda sudah pernah mengerjakan ujian untuk mata pelajaran ini!',
-            confirmButtonColor: '#16a34a'
-          }).then(() => {
-            switchView('viewPilihKelas');
-            muatDaftarMapelSiswa();
-          });
+          Swal.fire({ icon: 'error', title: 'Gagal Menyimpan', text: res.message, confirmButtonColor: '#e11d48' });
           return;
         }
+
         document.getElementById('examContainer').classList.add('hidden');
         document.getElementById('hasilUjian').classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
